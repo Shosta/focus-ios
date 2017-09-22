@@ -19,6 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #if BUDDYBUILD
             BuddyBuildSDK.setup()
         #endif
+        // Need to get "settings.sendUsageData" this way so that Sentry can be initialized
+        // before getting the Profile.
+        let sendUsageData = Settings.getToggle(.sendAnonymousUsageData) 
+        SentryIntegration.shared.setup(sendUsageData: sendUsageData)
         
         // Set up Telemetry
         let telemetryConfig = Telemetry.default.configuration
